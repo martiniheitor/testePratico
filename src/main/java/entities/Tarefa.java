@@ -16,22 +16,22 @@ import jakarta.persistence.ManyToOne;
 @Entity
 public class Tarefa {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    
-    @Column(nullable = false, length = 40)
-    private String titulo;
-    
-    @Column(nullable = false, length = 255)
-    private String descricao;
-    
-    @Enumerated(EnumType.STRING)
-    private Status status;
-    
-    @ManyToOne
-    @JoinColumn(name = "projeto_id", nullable = false)
-    private Projeto projeto;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+
+	@Column(nullable = false, length = 40)
+	private String titulo;
+
+	@Column(nullable = false, length = 255)
+	private String descricao;
+
+	@Enumerated(EnumType.STRING)
+	private Status status;
+
+	@ManyToOne
+	@JoinColumn(name = "projeto_id", nullable = false)
+	private Projeto projeto;
 
 	public Tarefa() {
 	}
@@ -39,6 +39,13 @@ public class Tarefa {
 	public Tarefa(Long id, String titulo, String descricao, Status status, Projeto projeto) {
 		super();
 		this.id = id;
+		this.titulo = titulo;
+		this.descricao = descricao;
+		this.status = status;
+		this.projeto = projeto;
+	}
+
+	public Tarefa(String titulo, String descricao, Status status, Projeto projeto) {
 		this.titulo = titulo;
 		this.descricao = descricao;
 		this.status = status;
@@ -101,5 +108,5 @@ public class Tarefa {
 		Tarefa other = (Tarefa) obj;
 		return Objects.equals(id, other.id);
 	}
-    
+
 }

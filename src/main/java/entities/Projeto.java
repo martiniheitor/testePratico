@@ -51,6 +51,13 @@ public class Projeto {
 		this.dataCriacao = dataCriacao;
 		this.tarefas = tarefas;
 	}
+	
+	public Projeto(String titulo, String descricao, Status status, List<Tarefa> tarefas) {
+	    this.titulo = titulo;
+	    this.descricao = descricao;
+	    this.status = status;
+	    this.tarefas = tarefas;
+	}
 
 	public Long getId() {
 		return id;
