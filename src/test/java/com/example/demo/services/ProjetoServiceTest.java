@@ -1,4 +1,4 @@
-package services;
+package com.example.demo.services;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -18,10 +18,11 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import entities.Projeto;
-import enums.Status;
+import com.example.demo.entities.Projeto;
+import com.example.demo.enums.Status;
+import com.example.demo.repositories.ProjetoRepository;
+
 import jakarta.persistence.EntityNotFoundException;
-import repositories.ProjetoRepository;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ProjetoServiceTest {

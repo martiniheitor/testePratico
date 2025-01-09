@@ -1,4 +1,4 @@
-package controllers;
+package com.example.demo.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -10,9 +10,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import dto.TarefaDTO;
-import entities.Tarefa;
-import services.TarefaService;
+import com.example.demo.dto.TarefaDTO;
+import com.example.demo.entities.Projeto;
+import com.example.demo.entities.Tarefa;
+import com.example.demo.services.ProjetoService;
+import com.example.demo.services.TarefaService;
 
 @RestController
 @RequestMapping("/tarefas")
@@ -20,6 +22,9 @@ public class TarefaController {
 
 	@Autowired
 	private TarefaService tarefaService;
+
+	@Autowired
+	private ProjetoService projetoService; // Novo serviço para buscar o Projeto
 
 	// Criar tarefa
 	@PostMapping
@@ -60,6 +65,11 @@ public class TarefaController {
 		tarefa.setTitulo(dto.getTitulo());
 		tarefa.setDescricao(dto.getDescricao());
 		tarefa.setStatus(dto.getStatus());
+
+		// Aqui, você precisa buscar o Projeto com base no ID
+		Projeto projeto = projetoService.buscarPorId(dto.getProjeto().getId()); // Busca o Projeto usando o serviço
+		tarefa.setProjeto(projeto); // Associa o Projeto à Tarefa
+
 		return tarefa;
 	}
 }

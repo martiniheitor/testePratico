@@ -1,4 +1,4 @@
-package controllers;
+package com.example.demo.controllers;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -13,11 +13,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import dto.ProjetoDTO;
-import dto.TarefaDTO;
-import entities.Projeto;
-import entities.Tarefa;
-import services.ProjetoService;
+import com.example.demo.dto.ProjetoDTO;
+import com.example.demo.dto.TarefaDTO;
+import com.example.demo.entities.Projeto;
+import com.example.demo.entities.Tarefa;
+import com.example.demo.services.ProjetoService;
 
 @RestController
 @RequestMapping("/projetos")

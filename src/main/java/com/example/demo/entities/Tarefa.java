@@ -1,12 +1,9 @@
-package entities;
+package com.example.demo.entities;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
-import enums.Status;
-import jakarta.persistence.CascadeType;
+import com.example.demo.enums.Status;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -14,10 +11,11 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
 @Entity
-public class Projeto {
+public class Tarefa {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,34 +27,30 @@ public class Projeto {
 	@Column(nullable = false, length = 255)
 	private String descricao;
 
-	@Enumerated(EnumType.STRING)
+	@Enumerated(EnumType.ORDINAL)
 	private Status status;
 
-	@Column(nullable = false, updatable = false)
-	private LocalDateTime dataCriacao = LocalDateTime.now();
+	@ManyToOne
+	@JoinColumn(name = "projeto_id", nullable = false)
+	private Projeto projeto;
 
-	@OneToMany(mappedBy = "projeto", cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<Tarefa> tarefas = new ArrayList<>();
-
-	public Projeto() {
+	public Tarefa() {
 	}
 
-	public Projeto(Long id, String titulo, String descricao, Status status, LocalDateTime dataCriacao,
-			List<Tarefa> tarefas) {
+	public Tarefa(Long id, String titulo, String descricao, Status status, Projeto projeto) {
 		super();
 		this.id = id;
 		this.titulo = titulo;
 		this.descricao = descricao;
 		this.status = status;
-		this.dataCriacao = dataCriacao;
-		this.tarefas = tarefas;
+		this.projeto = projeto;
 	}
-	
-	public Projeto(String titulo, String descricao, Status status, List<Tarefa> tarefas) {
-	    this.titulo = titulo;
-	    this.descricao = descricao;
-	    this.status = status;
-	    this.tarefas = tarefas;
+
+	public Tarefa(String titulo, String descricao, Status status, Projeto projeto) {
+		this.titulo = titulo;
+		this.descricao = descricao;
+		this.status = status;
+		this.projeto = projeto;
 	}
 
 	public Long getId() {
@@ -91,20 +85,12 @@ public class Projeto {
 		this.status = status;
 	}
 
-	public LocalDateTime getDataCriacao() {
-		return dataCriacao;
+	public Projeto getProjeto() {
+		return projeto;
 	}
 
-	public void setDataCriacao(LocalDateTime dataCriacao) {
-		this.dataCriacao = dataCriacao;
-	}
-
-	public List<Tarefa> getTarefas() {
-		return tarefas;
-	}
-
-	public void setTarefas(List<Tarefa> tarefas) {
-		this.tarefas = tarefas;
+	public void setProjeto(Projeto projeto) {
+		this.projeto = projeto;
 	}
 
 	@Override
@@ -120,7 +106,7 @@ public class Projeto {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Projeto other = (Projeto) obj;
+		Tarefa other = (Tarefa) obj;
 		return Objects.equals(id, other.id);
 	}
 

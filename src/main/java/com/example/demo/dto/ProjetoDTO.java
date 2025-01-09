@@ -1,10 +1,10 @@
-package dto;
+package com.example.demo.dto;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
-import enums.Status;
+import com.example.demo.enums.Status;
 
 public class ProjetoDTO {
 
@@ -27,6 +27,13 @@ public class ProjetoDTO {
 		this.status = status;
 		this.dataCriacao = dataCriacao;
 		this.tarefas = tarefas;
+	}
+	
+	public ProjetoDTO(String titulo, String descricao, Status status, List<TarefaDTO> tarefas) {
+	    this.titulo = titulo;
+	    this.descricao = descricao;
+	    this.status = status;
+	    this.tarefas = tarefas;
 	}
 
 	public Long getId() {

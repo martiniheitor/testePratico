@@ -1,4 +1,4 @@
-package services;
+package com.example.demo.services;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -17,10 +17,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import entities.Projeto;
-import entities.Tarefa;
-import enums.Status;
-import repositories.TarefaRepository;
+import com.example.demo.entities.Projeto;
+import com.example.demo.entities.Tarefa;
+import com.example.demo.enums.Status;
+import com.example.demo.repositories.TarefaRepository;
 
 @RunWith(MockitoJUnitRunner.class)
 public class TarefaServiceTest {

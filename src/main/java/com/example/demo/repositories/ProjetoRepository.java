@@ -1,7 +1,8 @@
-package repositories;
+package com.example.demo.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import entities.Projeto;
+
+import com.example.demo.entities.Projeto;
 
 public interface ProjetoRepository extends JpaRepository<Projeto, Long> {
 }

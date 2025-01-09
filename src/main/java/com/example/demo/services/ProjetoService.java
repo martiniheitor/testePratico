@@ -1,13 +1,15 @@
-package services;
+package com.example.demo.services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import entities.Projeto;
-import entities.Tarefa;
-import repositories.ProjetoRepository;
+import com.example.demo.entities.Projeto;
+import com.example.demo.entities.Tarefa;
+import com.example.demo.repositories.ProjetoRepository;
 
 @Service
 public class ProjetoService {
@@ -18,11 +20,41 @@ public class ProjetoService {
 	@Autowired
 	private TarefaService tarefaService;
 
-	// Criar projeto
+
+	// Criar Projeto
+	@Transactional
 	public Projeto criarProjeto(Projeto projeto) {
-		validarProjeto(projeto);
-		return projetoRepository.save(projeto);
+	    // Validações iniciais
+	    if (projeto.getTitulo() == null || projeto.getTitulo().trim().isEmpty()) {
+	        throw new IllegalArgumentException("O título do projeto não pode estar vazio.");
+	    }
+	    if (projeto.getStatus() == null) {
+	        throw new IllegalArgumentException("O status do projeto é obrigatório.");
+	    }
+
+	    // Salva o projeto inicialmente sem tarefas
+	    Projeto projetoSalvo = projetoRepository.save(projeto);
+
+	    // Associa manualmente as tarefas ao projeto salvo
+	    List<Tarefa> tarefasAssociadas = new ArrayList<>();
+	    if (projeto.getTarefas() != null && !projeto.getTarefas().isEmpty()) {
+	        for (Tarefa tarefa : projeto.getTarefas()) {
+	            tarefa.setProjeto(projetoSalvo); // Define o projeto na tarefa
+	            // Salva cada tarefa, mas agora dentro de uma transação controlada
+	            Tarefa tarefaSalva = tarefaService.criarTarefa(tarefa); // Salva a tarefa
+	            tarefasAssociadas.add(tarefaSalva); // Adiciona a tarefa salva à lista
+	        }
+	    }
+
+	    // Associa as tarefas ao projeto salvo
+	    projetoSalvo.setTarefas(tarefasAssociadas);
+	    
+	    // Não precisamos salvar o projeto novamente, pois já foi salvo na transação
+	    validarProjeto(projetoSalvo); // Validação final
+
+	    return projetoSalvo;
 	}
+
 
 	// Listar todos os projetos
 	public List<Projeto> listarProjetos() {
@@ -48,35 +80,24 @@ public class ProjetoService {
 		return projetoRepository.save(projeto);
 	}
 
+	// Validar Projeto
 	private void validarProjeto(Projeto projeto) {
-		// Valida se o título está vazio
 		if (projeto.getTitulo() == null || projeto.getTitulo().trim().isEmpty()) {
 			throw new IllegalArgumentException("O título do projeto não pode estar vazio.");
 		}
-
-		// Valida o status
 		if (projeto.getStatus() == null) {
 			throw new IllegalArgumentException("O status do projeto é obrigatório.");
 		}
-
-		// Valida se o projeto contém pelo menos uma tarefa
 		if (projeto.getTarefas() == null || projeto.getTarefas().isEmpty()) {
 			throw new IllegalArgumentException("Um projeto deve conter pelo menos uma tarefa.");
 		}
 
-		// Valida cada tarefa associada ao projeto
 		for (Tarefa tarefa : projeto.getTarefas()) {
-			tarefaService.validarTarefa(tarefa);
-
-			// Garante que a tarefa esteja relacionada ao projeto
 			if (tarefa.getProjeto() == null || !tarefa.getProjeto().equals(projeto)) {
 				throw new IllegalArgumentException("Cada tarefa deve estar associada ao projeto.");
 			}
-
-			// Verifica se a tarefa existente possui ID válido
-			if (tarefa.getId() == null) {
-				throw new IllegalArgumentException("As tarefas existentes devem conter um ID válido.");
-			}
+			tarefaService.validarTarefa(tarefa); // Validação de cada tarefa
 		}
 	}
+
 }

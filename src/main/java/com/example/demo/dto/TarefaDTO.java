@@ -1,8 +1,9 @@
-package dto;
+package com.example.demo.dto;
 
 import java.util.Objects;
 
-import enums.Status;
+import com.example.demo.entities.Projeto;
+import com.example.demo.enums.Status;
 
 public class TarefaDTO {
 
@@ -10,14 +11,21 @@ public class TarefaDTO {
 	private String titulo;
 	private String descricao;
 	private Status status;
-	private ProjetoDTO projeto;
+	private Projeto projeto;
 
 	public TarefaDTO() {
 	}
 
-	public TarefaDTO(Long id, String titulo, String descricao, Status status, ProjetoDTO projeto) {
+	public TarefaDTO(Long id, String titulo, String descricao, Status status, Projeto projeto) {
 		super();
 		this.id = id;
+		this.titulo = titulo;
+		this.descricao = descricao;
+		this.status = status;
+		this.projeto = projeto;
+	}
+
+	public TarefaDTO(String titulo, String descricao, Status status, Projeto projeto) {
 		this.titulo = titulo;
 		this.descricao = descricao;
 		this.status = status;
@@ -56,11 +64,11 @@ public class TarefaDTO {
 		this.status = status;
 	}
 
-	public ProjetoDTO getProjeto() {
+	public Projeto getProjeto() {
 		return projeto;
 	}
 
-	public void setProjeto(ProjetoDTO projeto) {
+	public void setProjeto(Projeto projeto) {
 		this.projeto = projeto;
 	}
 

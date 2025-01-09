@@ -1,4 +1,4 @@
-package controllers;
+package com.example.demo.controllers;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
@@ -22,12 +22,11 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import com.example.demo.dto.ProjetoDTO;
+import com.example.demo.entities.Projeto;
+import com.example.demo.enums.Status;
+import com.example.demo.services.ProjetoService;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
-import dto.ProjetoDTO;
-import entities.Projeto;
-import enums.Status;
-import services.ProjetoService;
 
 @ExtendWith(MockitoExtension.class)
 @WebMvcTest(ProjetoController.class)
