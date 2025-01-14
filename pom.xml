@@ -43,12 +43,14 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
+            <version>3.4.1</version>
         </dependency>
 
         <!-- Spring Boot Starter Web -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+            <version>3.4.1</version>
         </dependency>
 
         <!-- Driver JDBC MySQL -->
@@ -111,6 +113,7 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>3.4.1</version>
             </plugin>
         </plugins>
     </build>
